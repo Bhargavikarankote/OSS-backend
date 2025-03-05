@@ -5,16 +5,16 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 import bcrypt
 
-# ✅ FastAPI App Initialization
+# FastAPI App Initialization
 app = FastAPI()
 
-# ✅ Correct MySQL Connection String
+# Correct MySQL Connection String
 DATABASE_URL = "mysql+pymysql://root:root@localhost/data"  # Update credentials if needed
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 Base = declarative_base()
 
-# ✅ Database Models
+# Database Models
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
@@ -43,10 +43,10 @@ class ServiceProvider(Base):
     pricing_model = Column(String(100), nullable=False)
     availability = Column(String(50), nullable=False)
 
-# ✅ Create Database Tables
+# Create Database Tables
 Base.metadata.create_all(bind=engine)
 
-# ✅ Database Dependency
+#  Database Dependency
 def get_db():
     db = SessionLocal()
     try:
@@ -54,7 +54,7 @@ def get_db():
     finally:
         db.close()
 
-# ✅ Password Hashing Function
+#  Password Hashing Function
 def hash_password(password: str) -> str:
     return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
 
